@@ -11,7 +11,21 @@ function awsadminprd() {
 function precommit() {
     pre-commit run --show-diff-on-failure --color=always --all-files
 }
+
 function ga() {
     git add ${1:-.}
     git status
+}
+
+function cd() {
+    if [[ $1 =~ ^\.\.+$ ]]; then
+        local dots=${#1}
+        local path=".."
+        for ((i=1; i<dots-1; i++)); do
+            path+="/.."
+        done
+        builtin cd "$path"
+    else
+        builtin cd "$@"
+    fi
 }
